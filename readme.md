@@ -1,0 +1,1 @@
+# Benchmark for SQLc vs Gorm
