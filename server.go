@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/jmoiron/sqlx"
 )
 
 type Config struct {
@@ -11,22 +13,23 @@ type Config struct {
 
 type Server struct {
 	*Config
+	DB  *sqlx.DB
+	Mux *http.ServeMux
 }
 
 func GetServer(c *Config) *Server {
 	return &Server{
 		c,
+		DB_INIT(),
+		http.NewServeMux(),
 	}
 }
 
 func (S *Server) Start() {
 
-	mux := http.NewServeMux()
-	SetRoutes(mux)
-
 	fmt.Println("Server Started Listening on Port", S.Addr)
 
-	err := http.ListenAndServe(S.Addr, mux)
+	err := http.ListenAndServe(S.Addr, S.Mux)
 	if err != nil {
 		panic(err)
 	}
