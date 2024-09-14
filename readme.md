@@ -1,1 +1,1 @@
-# Benchmark for SQLc vs Gorm
+#GO - SQLx
